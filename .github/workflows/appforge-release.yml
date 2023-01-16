@@ -51,8 +51,9 @@ jobs:
         run: |
           export VERSION=$(./cicd/version.sh)
           echo "Version to set: $VERSION"
-          mvn -Dgpg.keyname=${{ secrets.GPG_KEY_NAME }} -Dgpg.passphrase=${{ secrets.MAVEN_SIGNING_KEY_PASSPHRASE }} \
-              -DreleaseVersion=$VERSION -Dtag=v$VERSION  release:prepare release:perform
+          cat ~/.m2/settings.xml
+          echo "username: $MVN_CENTRAL_USERNAME"
+          echo "pass: $MVN_CENTRAL_PASSWORD"
         env:
           MVN_CENTRAL_USERNAME: ${{ vars.MVN_CENTRAL_USERNAME }}
           MVN_CENTRAL_PASSWORD: ${{ secrets.MVN_CENTRAL_PASSWORD }}
